@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: api-usuarios
+
+server:
+  port: 8081
