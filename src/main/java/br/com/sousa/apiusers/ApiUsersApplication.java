@@ -1,14 +1,14 @@
-package br.com.sousa.apiusuarios;
+package br.com.sousa.apiusers;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ApiUsuariosApplication {
+public class ApiUsersApplication {
 
     public static void main(String[] args) {
 
-        SpringApplication.run(ApiUsuariosApplication.class, args);
+        SpringApplication.run(ApiUsersApplication.class, args);
 
     }
 

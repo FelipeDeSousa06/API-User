@@ -1,10 +1,10 @@
-package br.com.sousa.apiusuarios;
+package br.com.sousa.apiusers;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ApiUsuariosApplicationTests {
+class ApiUsersApplicationTests {
 
     @Test
     void contextLoads() {
