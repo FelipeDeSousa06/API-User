@@ -21,16 +21,15 @@ public class UserEntity {
     private String email;
     private String cel;
     private String nationality;
-    private Integer age;
 
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate birthDate;
 
-    public void setAge() {
+    public Integer getAge() {
         if(this.birthDate == null)
-            this.age = 0;
+            return null;
         else
-            this.age = Period.between(birthDate, LocalDate.now()).getYears();
+            return Period.between(birthDate, LocalDate.now()).getYears();
     }
 
 }

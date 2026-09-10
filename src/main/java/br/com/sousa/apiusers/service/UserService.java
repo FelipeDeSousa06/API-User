@@ -14,11 +14,14 @@ public class UserService {
     private static final List<UserEntity> users = new ArrayList<>(UserRepository.getUsers());
 
     public List<UserEntity> listAll() {
-        return new ArrayList<>(users);
+        return users;
     }
 
     public UserEntity findUser_id(Integer id) {
-        return users.get(id);
+        return users.stream()
+                .filter(user -> user.getId().equals(id))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
     }
 
 }

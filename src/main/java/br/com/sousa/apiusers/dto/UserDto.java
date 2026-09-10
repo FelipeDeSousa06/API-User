@@ -19,6 +19,5 @@ public class UserDto {
     private String cel;
     private LocalDate dateBirth;
     private String nationality;
-    private Integer age;
 
 }
