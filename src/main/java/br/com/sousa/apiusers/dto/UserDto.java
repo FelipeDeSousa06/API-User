@@ -1,5 +1,6 @@
 package br.com.sousa.apiusers.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -17,7 +18,9 @@ public class UserDto {
     private String cpf;
     private String email;
     private String cel;
-    private LocalDate dateBirth;
     private String nationality;
+
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    private LocalDate birthDate;
 
 }

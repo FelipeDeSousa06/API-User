@@ -79,6 +79,9 @@ public class UserRepository {
                 .nationality("Chinês")
                 .build());
 
+        for(UserEntity user : users)
+            user.setAge();
+
     }
 
 }
