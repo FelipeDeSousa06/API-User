@@ -27,7 +27,10 @@ public class UserEntity {
     private LocalDate birthDate;
 
     public void setAge() {
-        this.age = Period.between(birthDate, LocalDate.now()).getYears();
+        if(this.birthDate != null) {
+            this.age = Period.between(this.birthDate, LocalDate.now()).getYears();
+        } else
+            this.age = null;
     }
 
 }

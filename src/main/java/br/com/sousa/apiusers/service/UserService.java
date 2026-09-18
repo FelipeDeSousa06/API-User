@@ -70,6 +70,7 @@ public class UserService {
         newUser.setEmail(userDto.getEmail());
         newUser.setCel(userDto.getCel());
         newUser.setNationality(userDto.getNationality());
+        newUser.setBirthDate(userDto.getBirthDate());
         newUser.setAge();
 
         return newUser;
