@@ -23,13 +23,13 @@ public class UserController {
         return userService.listAll();
     }
 
-    @GetMapping("/search/{id}")
+    @GetMapping("/id")
     @ResponseStatus(HttpStatus.OK)
-    public UserEntity findUser_id(@PathVariable Integer id) {
+    public UserEntity findUser_id(@RequestParam Integer id) {
         return userService.findUserById(id);
     }
 
-    @GetMapping("/search")
+    @GetMapping("/name")
     @ResponseStatus(HttpStatus.OK)
     public List<UserEntity> findUser_name(@RequestParam String name) {
         return userService.findUserByName(name);
