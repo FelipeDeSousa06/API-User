@@ -2,6 +2,7 @@ package br.com.sousa.apiusers.controller;
 
 import br.com.sousa.apiusers.database.model.UserEntity;
 import br.com.sousa.apiusers.dto.UserDto;
+import br.com.sousa.apiusers.exception.NotFoundException;
 import br.com.sousa.apiusers.service.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -44,7 +45,7 @@ public class UserController {
     @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.CREATED)
     public UserEntity update_user(@RequestBody UserDto userDto,
-                                  @PathVariable Integer id) {
+                                  @PathVariable Integer id) throws NotFoundException {
         return userService.updateUser(userDto, id);
     }
 

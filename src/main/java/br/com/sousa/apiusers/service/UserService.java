@@ -4,6 +4,7 @@ import br.com.sousa.apiusers.database.model.UserEntity;
 import br.com.sousa.apiusers.database.repository.UserRepository;
 import br.com.sousa.apiusers.dto.UserDto;
 
+import br.com.sousa.apiusers.exception.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -58,11 +59,11 @@ public class UserService {
         return newUser;
     }
 
-    public UserEntity updateUser(UserDto userDto, Integer id) {
+    public UserEntity updateUser(UserDto userDto, Integer id) throws NotFoundException {
         UserEntity newUser = users.stream()
                 .filter(user -> user.getId().equals(id))
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException("Usuário não Encontrado"));
+                .orElseThrow(() -> new NotFoundException("Usuário não Encontrado"));
 
         newUser.setName(userDto.getName());
         newUser.setSex(userDto.getSex());
