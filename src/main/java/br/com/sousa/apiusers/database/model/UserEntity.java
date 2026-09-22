@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.time.Period;
 
 @Getter
 @Setter
@@ -26,11 +25,5 @@ public class UserEntity {
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate birthDate;
 
-    public void setAge() {
-        if(this.birthDate != null) {
-            this.age = Period.between(this.birthDate, LocalDate.now()).getYears();
-        } else
-            this.age = null;
-    }
 
 }

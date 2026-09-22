@@ -3,8 +3,11 @@ package br.com.sousa.apiusers.service;
 import br.com.sousa.apiusers.database.model.UserEntity;
 import br.com.sousa.apiusers.database.repository.UserRepository;
 import br.com.sousa.apiusers.dto.UserDto;
-
+import br.com.sousa.apiusers.exception.BusinessException;
 import br.com.sousa.apiusers.exception.NotFoundException;
+import br.com.sousa.apiusers.utils.AgeUtils;
+import br.com.sousa.apiusers.utils.SexUtils;
+
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -38,6 +41,13 @@ public class UserService {
     }
 
     public UserEntity createUser(UserDto userDto) {
+        if(existsByCpf(userDto.getCpf()))
+            throw new BusinessException("CPF já cadastrado");
+        else if(existsByCel(userDto.getCel()))
+            throw new BusinessException("Celular já cadastrado");
+        else if(existsByEmail(userDto.getEmail()))
+            throw new BusinessException("Email já cadastrado");
+
         Integer newId = users.stream()
                 .mapToInt(UserEntity::getId)
                 .max()
@@ -46,14 +56,19 @@ public class UserService {
         UserEntity newUser = UserEntity.builder()
                 .id(newId)
                 .name(userDto.getName())
-                .sex(userDto.getSex())
                 .cpf(userDto.getCpf())
                 .email(userDto.getEmail())
                 .cel(userDto.getCel())
                 .nationality(userDto.getNationality())
                 .birthDate(userDto.getBirthDate())
                 .build();
-        newUser.setAge();
+
+        String formattedSex = SexUtils.formatSex((userDto.getSex()));
+        newUser.setSex(formattedSex);
+
+        Integer age = AgeUtils.calculateAge(userDto.getBirthDate());
+        newUser.setAge(age);
+
         users.add(newUser);
 
         return newUser;
@@ -65,20 +80,44 @@ public class UserService {
                 .findFirst()
                 .orElseThrow(() -> new NotFoundException("Usuário não Encontrado"));
 
+        if(existsByCpf(userDto.getCpf()))
+            throw new BusinessException("CPF já cadastrado");
+        else if(existsByCel(userDto.getCel()))
+            throw new BusinessException("Celular já cadastrado");
+        else if(existsByEmail(userDto.getEmail()))
+            throw new BusinessException("Email já cadastrado");
+
         newUser.setName(userDto.getName());
-        newUser.setSex(userDto.getSex());
+
+        String formattedSex = SexUtils.formatSex(userDto.getSex());
+        newUser.setSex(formattedSex);
+
         newUser.setCpf(userDto.getCpf());
         newUser.setEmail(userDto.getEmail());
         newUser.setCel(userDto.getCel());
         newUser.setNationality(userDto.getNationality());
         newUser.setBirthDate(userDto.getBirthDate());
-        newUser.setAge();
+
+        Integer age = AgeUtils.calculateAge(userDto.getBirthDate());
+        newUser.setAge(age);
 
         return newUser;
     }
 
     public void deleteUser(Integer id) {
         users.removeIf(user -> user.getId().equals(id));
+    }
+
+    private boolean existsByCpf(String cpf) {
+        return UserRepository.uniqueByCpf(cpf, users);
+    }
+
+    private boolean existsByCel(String cel) {
+        return UserRepository.uniqueByCel(cel, users);
+    }
+
+    private boolean existsByEmail(String email) {
+        return UserRepository.uniqueByEmail(email, users);
     }
 
 }

@@ -5,6 +5,7 @@ import br.com.sousa.apiusers.dto.UserDto;
 import br.com.sousa.apiusers.exception.NotFoundException;
 import br.com.sousa.apiusers.service.UserService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -38,13 +39,13 @@ public class UserController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public UserEntity create_user(@RequestBody UserDto userDto) {
+    public UserEntity create_user(@Valid @RequestBody UserDto userDto) {
         return userService.createUser(userDto);
     }
 
     @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public UserEntity update_user(@RequestBody UserDto userDto,
+    public UserEntity update_user(@Valid @RequestBody UserDto userDto,
                                   @PathVariable Integer id) throws NotFoundException {
         return userService.updateUser(userDto, id);
     }
